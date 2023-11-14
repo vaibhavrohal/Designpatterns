@@ -1,5 +1,8 @@
 package Builder.Builder3;
 
+import Builder.Builder3.Exception.InvalidGradyearException;
+import Builder.Builder3.Exception.InvalidNameException;
+
 public class Student {
 
     private String name;
@@ -11,6 +14,11 @@ public class Student {
         this.age=b.getAge();
         this.gradyear=b.getGradyear();
 
+    }
+
+    @Override
+    public String toString(){
+        return "name is "+this.name+", age is "+this.age+", Gradyear is "+this.gradyear;
     }
 
     public static Builder getbuilder (){
@@ -48,7 +56,17 @@ public class Student {
             this.gradyear = gradyear;
             return this;
         }
+
+        private void validate(){
+            if (name==null){
+                throw new InvalidNameException("name can not be null ");
+            }
+            if (gradyear>2022){
+                throw  new InvalidGradyearException("Grad year can not be more then 2022");
+            }
+        }
         public Student build(){
+            this.validate();
             return new Student(this);
         }
     }
